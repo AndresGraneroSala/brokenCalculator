@@ -31,7 +31,11 @@ public class OpenKeyboard : MonoBehaviour
                 string responseText = webRequest.downloadHandler.text;
                 if(responseText== "no mobile phone")
 				{
-                    Destroy(this);
+                    /*inputField.onDeselect.RemoveAllListeners();
+                    inputField.onSelect.RemoveAllListeners();
+                    */
+                    Destroy(keyboard);
+
 				}
             }
         }
@@ -40,6 +44,7 @@ public class OpenKeyboard : MonoBehaviour
 
 public void Open()
     {
+        if(keyboard!=null)
         keyboard.SetActive(true);
 
     }
@@ -47,7 +52,9 @@ public void Open()
 
     public void CloseKeyboard()
 	{
-        keyboard.SetActive(false);
+        if (keyboard != null)
+
+            keyboard.SetActive(false);
 
     }
 }
