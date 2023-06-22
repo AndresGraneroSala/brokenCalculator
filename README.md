@@ -11,7 +11,7 @@ You can only use one button for each operation, and the order of operations is f
 
 ## Solution calculator calculator
 This calculator is on the left.  
-The calculator find solutions using + - ÷ *
+The calculator find solutions using + - ÷ X
 Like the normal calculator, this one has no commutative property.
 
 # Hammer
