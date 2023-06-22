@@ -1,5 +1,5 @@
 # Calculator broken
-(finished) [PLAY](https://andriupostre.github.io/brokenCalculator/)	
+(finished)  [PLAY](https://andriupostre.github.io/brokenCalculator/)  
 ![This is an alt text.](https://raw.githubusercontent.com/AndriuPostre/brokenCalculator/main/screenshot.png)
 
 # Two calculators
