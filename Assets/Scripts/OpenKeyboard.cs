@@ -1,18 +1,53 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Networking;
+using System.Collections;
 
 public class OpenKeyboard : MonoBehaviour
 {
     public TMP_InputField inputField;
+    public GameObject keyboard;
 
-    [ContextMenu("open")]
-    public void OpenKeyboardOnClick()
+   
+
+    [ContextMenu("web")]
+    IEnumerator Start()
     {
-        // Establece el campo de entrada como seleccionado
-        inputField.Select();
+        keyboard.SetActive(false);
 
-        // Activa el teclado en el campo de entrada
-        TouchScreenKeyboard.Open("", TouchScreenKeyboardType.Default);
+        using (UnityWebRequest webRequest = UnityWebRequest.Get("https://service.andriupostre.repl.co"))
+        //https://replit.com/@AndriuPostre/service
+        {
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log("Error al realizar la petición: " + webRequest.error);
+            }
+            else
+            {
+                // Accede a los datos de la respuesta
+                string responseText = webRequest.downloadHandler.text;
+                if(responseText== "no mobile phone")
+				{
+                    Destroy(this);
+				}
+            }
+        }
+    }
+
+
+public void Open()
+    {
+        keyboard.SetActive(true);
+
+    }
+
+
+    public void CloseKeyboard()
+	{
+        keyboard.SetActive(false);
+
     }
 }
