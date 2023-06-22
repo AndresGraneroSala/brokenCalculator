@@ -18,6 +18,21 @@ public class CalculateResults : MonoBehaviour
 
 	public Text numSolutions;
 
+	public static CalculateResults SharedInstance;
+	public List<string> brokenCharacters;
+
+	private void Awake()
+	{
+		if (SharedInstance == null)
+		{
+			SharedInstance = this;
+		}
+		else
+		{
+			Debug.LogError("In script calculate results 2 instance");
+		}
+	}
+
 	public void LookOptions()
 	{
 		if (InputField.text == "")
@@ -49,9 +64,25 @@ public class CalculateResults : MonoBehaviour
 		string tempSolution = operation.Replace(" ", "");
 
 
-		if( !(tempSolution.Distinct().Count() != tempSolution.Length))
+		if (!(tempSolution.Distinct().Count() != tempSolution.Length))
 		{
-			solutions.Add(operation);
+			if (brokenCharacters.Count == 0)
+			{
+
+				solutions.Add(operation);
+			}
+			else
+			{
+				Debug.Log(brokenCharacters.Count);
+				for (int i = 0; i < brokenCharacters.Count; i++)
+				{
+					if (operation.Contains(brokenCharacters[i]))
+					{
+						return;
+					}
+				}
+				solutions.Add(operation);
+			}
 		}
 	}
 

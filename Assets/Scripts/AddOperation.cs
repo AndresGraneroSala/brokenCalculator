@@ -14,6 +14,13 @@ public class AddOperation : MonoBehaviour
 	[SerializeField]
 	private Result _result;
 
+	public GameObject prefabCracks;
+	public Transform parentCrack;
+	public GameObject crackPanel;
+
+	public bool brokenButton = false;
+
+
 	private void Start()
 	{
 		_result = Result.SharedInstance;
@@ -22,11 +29,26 @@ public class AddOperation : MonoBehaviour
 		newOperation = GetComponentInChildren<Text>().text;
 		gameObject.GetComponent<Button>().onClick.AddListener(AddNewOperation);
 
-		 
+		parentCrack = transform.Find("Text (Legacy)");
+		GameObject cracks= Instantiate(prefabCracks,parentCrack);
+		cracks.SetActive(false);
+		crackPanel = cracks.gameObject;
 	}
 
 	public void AddNewOperation()
 	{
+		if (hammer.SharedInstance.usingHammer)
+		{
+			Crack();
+			return;
+		}
+
+		if (brokenButton)
+		{
+			return;
+		}
+
+
 		if (_result.operations.Count == 0)
 		{
 			//just numbers no operations
@@ -88,4 +110,21 @@ public class AddOperation : MonoBehaviour
 		return false;
 	}
 
+	public void Crack()
+	{
+		if (crackPanel.activeSelf)
+		{
+			crackPanel.SetActive(false);
+			brokenButton = false;
+			CalculateResults.SharedInstance.brokenCharacters.Remove(newOperation);
+
+		}
+		else
+		{
+			crackPanel.SetActive(true);
+			brokenButton = true;
+			CalculateResults.SharedInstance.brokenCharacters.Add(newOperation);
+
+		}
+	}
 }
